@@ -1,0 +1,105 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+/* .navbar{
+    background-color: aliceblue;
+
+}
+.left a{
+  float: left;
+
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+.navbar right{
+    float: right;
+} */
+
+.navbar{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+    background-color: lightgray;
+}
+
+.left{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.right{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+h4{
+    padding: 10px;
+}
+.home{
+    padding: 10px;
+}
+.home a{
+    text-decoration: none;
+    color: black;
+}
+.search {
+    padding: 10px;
+}
+.search a{
+    text-decoration: none;
+    color: black;
+}
+.cart{
+    padding: 10px;
+}
+.cart a{
+    text-decoration: none;
+    color: black;
+}
+.history{
+    padding: 10px;
+}
+.history a{
+    text-decoration: none;
+    color: black;
+}
+.profile{
+    padding: 10px;
+}
+.profile a{
+    text-decoration: none;
+    color: black;
+}
+.right{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.butSign{
+    padding: 10px;
+    background-color: transparent;
+    margin-left: 20px;
+    border-color: aqua;
+    border-radius:5px;
+    margin-right: 50px;
+}
+.butAdd{
+    padding: 10px;
+    background-color: transparent;
+    border-color: aqua;
+    border-radius:5px;
+
+}
+/* .Signout{
+    margin-right: 50px;
+    background-color: grey;
+    padding: 5px;
+    color: aqua;
+} */
