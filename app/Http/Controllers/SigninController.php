@@ -27,11 +27,11 @@ class SigninController extends Controller
         if(Auth::viaRemember()){
             $request->session()->regenerate();
 
-            return redirect()->intended('/CustomerHome');
+            return redirect()->intended('/Home');
         }
         if(auth()->attempt($request->only(['email', 'password']))){
                  $request->session()->regenerate();
-                 return redirect()->intended('/CustomerHome');
+                 return redirect()->intended('/Home');
         }
 
     }

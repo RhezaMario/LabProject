@@ -21,22 +21,31 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/CustomerHome', [ProductController::class, 'CustomerHome'])->middleware('auth');
 
-
-
-Route::get('/SignIn', [SigninController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/SignIn', [SigninController::class, 'authenticate']);
-Route::post('/SignOut', [SigninController::class, 'logout']);
+Route::get('/SignIn', [SigninController::class, 'index'])->middleware('guest');
+Route::post('/SignIn', [SigninController::class, 'authenticate'])->middleware('guest');
+Route::post('/SignOut', [SigninController::class, 'logout'])->middleware('auth');
 Route::get('/SignUp', [SignupController::class, 'index'])->middleware('guest');
-Route::post('/SignUp', [SignupController::class, 'store']);
+Route::post('/SignUp', [SignupController::class, 'store'])->middleware('guest');
 
 Route::get('/Profile', [ProfileController::class, 'index'])->middleware('auth');
-Route::get('/AdminHome', [ProductController::class, 'AdminHome']);
-Route::post('/AddItem', [ProductController::class, 'store']);
-Route::get('/AddItem' , [ProductController::class, 'addpage']);
+Route::get('/Home', [ProductController::class, 'Home'])->middleware('auth');
+Route::post('/AddItem', [ProductController::class, 'store'])->middleware('admin');
+Route::get('/AddItem' , [ProductController::class, 'addpage'])->middleware('admin');
 
-Route::get('/AdminHome/{name}', [ProductController::class, 'productView']);
+Route::get('/Home/{name}', [ProductController::class, 'productView'])->middleware('auth');
 
-
+Route::delete('/Products/{id}', [ProductController::class, 'delete'])->middleware('admin');
+Route::get('/updateprofile', [ProfileController::class, 'updateprofiles'])->middleware('member');
+Route::put('/updateprofile', [ProfileController::class, 'updateprofile'])->middleware('member');
+Route::get('/updatepassword', [ProfileController::class, 'updatepasswords'])->middleware('auth');
+Route::put('/updatepassword/{id}', [ProfileController::class, 'updatepassword'])->middleware('auth');
+Route::get('/Search', [ProductController::class, 'search_product'])->middleware('auth');
+Route::post('/AddCart/{id}', [ProductController::class, 'addcart'])->middleware('auth');
+Route::get('/Cart', [ProductController::class, 'viewcart'])->middleware('auth');
+Route::delete('/CartDelete/{id}', [ProductController::class, 'deletecart'])->middleware('member');
+Route::get('/EditCart/{id}', [ProductController::class, 'editcartview'])->middleware('member');
+Route::post('/updatecart/{id}', [ProductController::class, 'updatecart'])->middleware('member');
+Route::get('/History', [ProductController::class, 'historyindex'])->middleware('member');
+Route::get('/Checkout', [ProductController::class, 'checkout'])->middleware('member');
 

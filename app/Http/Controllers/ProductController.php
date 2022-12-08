@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Cart;
+use App\Models\TransactionDetail;
+use App\Models\Transactions;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -17,13 +22,9 @@ class ProductController extends Controller
     {
         return view('welcome');
     }
-    public function CustomerHome(){
-        $productData = Product::paginate(8);
-        return view('CustomerHome', compact('productData'));
-    }
-    public function AdminHome(){
+    public function Home(){
         $Data = Product::paginate(8);
-        return view('AdminHome', compact('Data'));
+        return view('Home', compact('Data'));
     }
     public function addpage(){
         return view ('AddItem');
@@ -63,7 +64,7 @@ class ProductController extends Controller
             'description'=> $request->description,
             'stock' => $request->stock
        ]);
-       return redirect('/AdminHome');
+       return redirect('/Home');
     }
     public function productView($name)
     {
@@ -72,8 +73,14 @@ class ProductController extends Controller
             return view('ProductDetails', compact('products'));
         }
         else{
-            return redirect ('/AdminHome')->with('status', "not available");
+            return redirect ('/Home')->with('status', "not available");
         }
+    }
+
+    public function search_product(Request $request){
+        $name_search = $request->name;
+        $products = Product::where('name', 'LIKE', "%$name_search%")->paginate(3)->withQueryString();
+        return view('Search', compact('products'));
     }
 
     /**
@@ -116,8 +123,112 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $data = Product::where('id', $id)->first();
+        // if($data->image_url){
+        //     Storage::delete($data->image_url);
+        // }
+        $data->delete();
+
+        return redirect()->back();
     }
+    public function addcart(Request $request, $id){
+        $this->validate($request, rules: [
+            'quantity' => 'required|integer|min:1',
+       ]);
+        if(Auth::check()){
+            $check = Cart::where('product_id', $id)->where('user_id', Auth::id())->first();
+            if($check){
+                $cart = Cart::find($check->id);
+                $cart->update([
+                    'quantity' => $request->quantity
+                ]);
+                return back()->with('message', 'Cart updated');
+            }
+            else{
+                $cart = new Cart;
+                $cart->user_id = Auth::id();
+                $cart->product_id = $id;
+                $cart->quantity = $request->quantity;
+                $cart->save();
+                return back()->with('message', 'Items Added');
+            }
+            return redirect()->back();
+        }
+        else{
+            return redirect('/Signin');
+        }
+    }
+    public function viewcart(){
+        $total = 0;
+        $qty = 0;
+        $cartitems = Cart::where('user_id', Auth::id())->get();
+        return view('Cart', compact('cartitems', 'total', 'qty'));
+    }
+    public function deletecart($id)
+    {
+        $data = Cart::where('id', $id)->first();
+        // if($data->image_url){
+        //     Storage::delete($data->image_url);
+        // }
+        $data->delete();
+
+        return redirect()->back();
+    }
+    public function editcartview($id){
+        if(Product::where('id', $id)->exists()){
+            $products = Product::where('id', $id)->first();
+            return view('EditCart', compact('products'));
+        }
+        else{
+            return redirect ('/Cart')->with('message', "not available");
+        }
+    }
+    public function updatecart(Request $request, $id){
+        $this->validate($request, rules: [
+            'quantity' => 'required|integer|min:1',
+       ]);
+        if(Auth::check()){
+            $check = Cart::where('product_id', $id)->where('user_id', Auth::id())->first();
+            if($check->exists()){
+                $cart = Cart::find($check->id);
+                $cart->update([
+                    'quantity' => $request->quantity
+                ]);
+                return back()->with('message', 'Cart updated');
+            }
+
+        }
+        else{
+            return redirect('/Signin');
+        }
+    }
+    public function historyindex(){
+        $total = 0;
+        $transaction = Transactions::with('details')->where('user_id', Auth::id())->get();
+        return view('History', compact('transaction', 'total'));
+    }
+   public function checkout(){
+        $transactions = new Transactions();
+        $ldate = date('Y-m-d H:i:s');
+        $transactions->transaction_date = $ldate;
+        $transactions->user_id = Auth::id();
+        $transactions->save();
+
+        $items = Cart::where('user_id', Auth::id())->get();
+        foreach($items as $item)
+        {
+            TransactionDetail::create([
+                'transaction_id'=> $transactions->id,
+                'product_id'=>$item->product_id,
+                'quantity'=>$item->quantity,
+            ]);
+        }
+        foreach($items as $item){
+            $item->delete();
+        }
+        return redirect('/History');
+   }
 }
+

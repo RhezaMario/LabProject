@@ -18,28 +18,28 @@ class ProductSeeder extends Seeder
         Product::create([
             'name' => "Blue t-shirt",
             'price' => 50.000,
-            'image_url' => "public/Images/BackgroundRegis",
+            'image_url' => "public/Images/BackgroundRegis.jpg",
             'description' => "baju biru",
             'stock' => 8
         ]);
         Product::create([
             'name' => "Blue t-shirt",
             'price' => 50.000,
-            'image_url' => "public/Images/BackgroundRegis",
+            'image_url' => "public/Images/BackgroundRegis.jpg",
             'description' => "baju biru",
             'stock' => 8
         ]);
         Product::create([
             'name' => "Blue t-shirt",
             'price' => 50.000,
-            'image_url' => "public/Images/BackgroundRegis",
+            'image_url' => "public/Images/BackgroundRegis.jpg",
             'description' => "baju biru",
             'stock' => 8
         ]);
         Product::create([
             'name' => "Blue t-shirt",
             'price' => 50.000,
-            'image_url' => "public/Images/BackgroundRegis",
+            'image_url' => "product_image/download.jpg",
             'description' => "baju biru",
             'stock' => 8
         ]);

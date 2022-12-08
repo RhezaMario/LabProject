@@ -19,20 +19,30 @@
                      <h4>MAI BOUTIQUE</h4>
                 </div>
                 <div class="home">
-                    <a href = "" >Home</a>
+                    <a href = "/Home" >Home</a>
                 </div>
                 <div class="search">
-                    <a href = "" >Search</a>
+                    <a href = "/Search" >Search</a>
                 </div>
+                @can('member')
+                <div class="cart">
+                    <a href = "/Cart" >Cart</a>
+                </div>
+                <div class="history">
+                    <a href = "/History" >History</a>
+                </div>
+                @endcan
                 <div class="profile">
-                    <a href = "" >Profile</a>
+                    <a href = "/Profile" >Profile</a>
                 </div>
         </div>
 
         <div class = "right">
+                @can('admin')
                 <div class="buttonAdd">
                    <a href="/AddItem">Add Item </a>
                 </div>
+                @endcan
                 <form action="/SignOut" method = "POST">
                 @csrf
                 <div class="buttonSignout">
@@ -41,7 +51,7 @@
             </form>
         </div>
     </div>
-    @yield('navbar-admin')
+    @yield('contents')
 
 </body>
 </html>

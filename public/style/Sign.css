@@ -10,14 +10,14 @@ html{
 }
 
 .formulir{
-    height: 850px;
+    height: 900px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .form{
     width: 30%;
-    height: 70%;
+    height: 73%;
     border-radius: 15px;
     background-color: pink;
     display: flex;
@@ -58,3 +58,15 @@ html{
     cursor: pointer;
 }
 
+.back{
+    border-style: solid;
+    border-color: red;
+    border-radius: 5px;
+    margin: 20px;
+    margin-left: -150px;
+    float: left;
+}
+
+.back h6{
+    padding: 5px;
+}

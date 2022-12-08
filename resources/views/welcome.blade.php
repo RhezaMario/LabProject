@@ -27,9 +27,7 @@
                 <h3>Online Boutique that Provides You with Various Clothes to Suit Your Various Activities</h3>
                 <br>
                 <button type="button" class = "HomeButton"onclick="window.location = 'SignUp'">Sign Up Now</button>
-                <button type="button" class = "HomeButton"onclick="window.location = 'AdminHome'">AdminHome</button>
             </div>
-
 
     </body>
 </html>

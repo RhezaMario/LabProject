@@ -1,10 +1,12 @@
 <link href="{{ asset('style/Sign.css') }}" rel="stylesheet">
-@extends('AdminHeader')
+@include('template')
 
-@section('navbar-admin')
-     <div class="p-10">
-        <h1 class="text-center"> Add Items </h1>
-    </div>
+<div class = "formulir">
+    <div class="form">
+        <div class="sign">
+            <h1>Add Items </h1>
+        </div>
+
     <div class="formAsli">
         <form method="POST" action="/AddItem" enctype="multipart/form-data">
             @csrf
@@ -64,5 +66,10 @@
                 <button style="cursor:pointer" type="submit" class="btnSubmit">Submit</button>
             </div>
         </form>
+
     </div>
-    @endsection
+
+</div>
+
+
+</div>

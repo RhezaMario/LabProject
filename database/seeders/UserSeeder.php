@@ -21,7 +21,15 @@ class UserSeeder extends Seeder
             'isAdmin' => True,
             'address' => "Jalan batu rusa 5",
             'phone' => "08123456789",
-            'email' => "ekin.tanuwijaya@gmail.com",
+            'email' => "asdf@gmail.com",
+            'password' => bcrypt("1234567")
+        ]);
+        User::create([
+            'name' => "asdfg",
+            'isAdmin' => false,
+            'address' => "Jalan batu rubi 2",
+            'phone' => "08123456789",
+            'email' => "asdfg@gmail.com",
             'password' => bcrypt("1234567")
         ]);
     }
